@@ -1,4 +1,4 @@
-# AzureSQLConnnectivityChecker
+# AzureSQLConnectivityChecker
 This application has been designed with a main idea: how to obtain information about the elapsed time in the connectivity process and the query execution to a database of Azure SQL Database.
 
 Basically we need to configure the parameters:
