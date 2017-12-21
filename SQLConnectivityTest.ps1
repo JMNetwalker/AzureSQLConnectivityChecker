@@ -1,7 +1,7 @@
-$DatabaseServer = "yochanan.database.windows.net"
-$Database = "AdventureWorks"
-$Username = "yochanan"
-$Password = "P@ssw0rd" 
+$DatabaseServer = "xxxx.database.windows.net"
+$Database = "xxxx"
+$Username = "xxxx"
+$Password = "xxxx" 
 $Pooling = $true
 $NumberExecutions =10
 $WorkingDirectory = "C:\TEMP\"
