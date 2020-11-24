@@ -34,17 +34,17 @@ Basically we need to configure the parameters.
 
 ## Connectivity
 
-- **$server, #ServerName parameter to connect 
-- **$user, #UserName parameter  to connect
-- **$password, #Password Parameter  to connect
-- **$Db, #DBName Parameter  to connect
-- **$LogFile = "C:\ConnReport\Connectivity.Log", #Folder Parameter to save the log file
-- **$Pooling =1, #Use pooling
-- **$NumberExecutions = 100, #Number of operations to perform, (Remember that 100 operations * delay per execution)
-- **$Provider = "MSOLEDBSQL", #Provider
-- **$DelayBetweenExecution=1, #Delay between executions 
-- **$PortCX = "1433", #Port to check
-- **$DetailPort="0" , #Detailed or not the port list
-- **$ScanPort ="1" #Scan de port
+- **$server**, #ServerName parameter to connect 
+- **$user**, #UserName parameter  to connect
+- **$password**, #Password Parameter  to connect
+- **$Db**, #DBName Parameter  to connect
+- **$LogFile** = "C:\ConnReport\Connectivity.Log", #Folder Parameter to save the log file
+- **$Pooling** =1, #Use pooling
+- **$NumberExecutions** = 100, #Number of operations to perform, (Remember that 100 operations * delay per execution)
+- **$Provider** = "MSOLEDBSQL", #Provider
+- **$DelayBetweenExecution**=1, #Delay between executions 
+- **$PortCX** = "1433", #Port to check
+- **$DetailPort**="0" , #Detailed or not the port list
+- **$ScanPort** ="1" #Scan de port
       
 Enjoy!
