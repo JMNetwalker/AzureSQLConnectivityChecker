@@ -89,6 +89,6 @@ Basically we need to configure the parameters.
     If you change the parameter of **US_CONN_TIMES_TO_CLOSE** with value false and you define **US_CONN_TIMES_TO_EXECUTE** around 5000 ports. You are going to have error messages that there is not possible to open more ports. Normally, you are going to see Login Timeout Expired.
 
 - **Change the name or the port**
-    If you change the parameter of **US_CONN_TIMES_CHECK_PORT** to un-existing port you are going to have error messages that there is not possible to open more ports. Normally, you are going to see Login Timeout Expired.
+    If you change the parameter of **US_CONN_TIMES_CHECK_PORT** to un-existing port you are going to have error messages that there is not possible to open this port and it is not listening. Normally, you are going to see Login Timeout Expired.
 
 Enjoy!
