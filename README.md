@@ -90,5 +90,29 @@ Basically we need to configure the parameters.
 
 - **Change the name or the port**
     If you change the parameter of **US_CONN_TIMES_CHECK_PORT** to un-existing port you are going to have error messages that there is not possible to open this port and it is not listening. Normally, you are going to see Login Timeout Expired.
+    
+# Main.java
+This application has been designed with a main idea: how to obtain information about the elapsed time in the connectivity process and the query execution to a database of Azure SQL Database using JAVA (Microsoft JDBC Driver for SQL Server). This JAVA console script runs in Windows and Linux.
+
+This JAVA console script has the main features: 
+
+- **Connect using Microsoft JDBC Driver for SQL Server driver measuring the time spent**
+- **Once you have established the connection runs multiple times the query SELECT 1 measuring the time spent**
+
+In the Main.Java file you will have the options to run your test, ErrorClient.Java contains all test and ClsRetryLogic contains retry-logic mecanishm.
+Basically we need to configure the parameters.
+
+## Connectivity - Methods
+
+- **setCloseConnection**, instructs to close explicit the connection (true) or not (false)
+- **setReadingSQLData**, instructs to run or not the T-SQL specified in **setSQLReadToExecute** parameter.
+- **setTotalIteractions**, instructs how many connections to make.
+- **setSQLCommandTimeout**, instructs how much time for command timeout
+- **setSQLReadToExecute**, Close or not the connection, very useful to reproduce the issue with ephemeral ports exhaustion.
+
+## Simulation cases
+
+- **Ephemeral ports exhaustion**
+    If you change the parameter of **setCloseConnection** with value false and you define **setTotalIteractions** around 30000 ports. You are going to have error messages that there is not possible to open more ports. Normally, you are going to see Login Timeout Expired.
 
 Enjoy!
