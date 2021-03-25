@@ -149,7 +149,7 @@ public class ErrorClientHikari {
         // check if a connection is still alive
         config.setValidationTimeout(5000);
         config.setIdleTimeout(this.getConnectionTimeout()*2);
-        config.setMaximumPoolSize(5);
+        config.setMaximumPoolSize(this.getMaximumPoolSize());
         config.setPoolName("DotNetExample");
 
         return new HikariDataSource(config);  
