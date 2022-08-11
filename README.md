@@ -146,4 +146,105 @@ You need to configure the parameters:
 ### The results
 - For every interaction the results will be save on **c:\test\ResultsN.Log**, where **N** is the number of job execute.
 
+# SQLConnectivityTestMultiDriver.ps1
+This application has been designed with a main idea: We usually have service requests when our customers, using different drivers, need to know the connection latency, execution time spent or validate the connection.
+For this reason, I developed this small PowerShell script  (based on initiative of AzureSQLConnectivityChecker in multiple languages) which will basically connect to the database using 4 drivers/providers and test this.
+
+## Today, we started with SQLConnectivityTestMultiDriver.ps1 PowerShell Script and you are going to be able to:
+
+- **Connect using the drivers**: Net SqlClient, ODBC 17, OLEDB and MSOLEDBSQL.
+- **In every interaction**, you could obtain:
+  ++ Connectivity latency.
+  ++ Time invested in the execution of each query.
+  ++ Average time spent on connectivity and per query.
+  ++ How many ports the customer application has (1433,11000-12000 and others).
+  ++ Check if the DNS is resolving correct IP. 
+
+## Here are the main details:
+
+- **Parameters**, if you don't specify any of them, PowerShell Script will ask the value and check it.
+
+  + **$DatabaseServer**, will be the server name to connect. 
+  + **$Database**, will be the database name to connect.
+  + **$Username**, user name to connect
+  + **$passwordSecure**, password. 
+  + **$NumberExecutions**, how many executions that you want to run. 
+  + **$LogFile**, will be the log file that all operations will be saved. If this file is not specify, the application will ask the location. 
+  + **$Driver** to use, the values are: 
+    ++ SQLCLIENT for .NET SQL Client.
+    ++ ODBC
+    ++ MSOLEDBSQL
+    ++ SQLOLEDB
+   + $InputFile**, will be the different TSQL that you want to use. This file needs to contain per line the TSQL to execute. If you don't specify it, we are going to use SELECT 1. For example,:
+  SELECT 1
+  SELECT count(Id) FROM PerformanceVarcharnVarchar Where TextToSearch = N'Test Search ' + CONVERT(nvarchar(200),RAND()*(2000000-10000)+10000) OPTION (MAXDOP 1)
+
+## Outcome:
+In the $LogFile you are going to have all the results and summary about connection and execution spent, for example, 
+
+    2022-08-11 03:33:15 Driver: SQLOLEDB
+    2022-08-11 03:33:15 Connecting to the database: servername.database.windows.net - DB: dbname...Attempt #1 of 5 - IP:52.138.224.1
+    2022-08-11 03:33:16 Connected to the database in (ms):324.1887 - Provider:SQLOLEDB -- HostName: Server Version:12.00.0312
+    2022-08-11 03:33:16 Total Connections Failed : 0
+    2022-08-11 03:33:16 Total Connections Success: 1
+    2022-08-11 03:33:16 Total Connections ms : 324
+    2022-08-11 03:33:16 Ports Count : 1433 0 (0) 11xx: (0) Others:(215)
+    2022-08-11 03:33:16 Ports Status:
+    2022-08-11 03:33:16 ---->Established (207)
+    2022-08-11 03:33:16 ---->TimeWait (5)
+    2022-08-11 03:33:16 ---->SynSent (2)
+    2022-08-11 03:33:16 -------------------------------------------------------------------------------------
+    2022-08-11 03:33:16 Query : SELECT 1
+    2022-08-11 03:33:16 Iteration : 1 Query 1 / 2
+    2022-08-11 03:33:16 Time required (ms) : 41,416
+    2022-08-11 03:33:16 Query Commands Failed : 0
+    2022-08-11 03:33:16 Query Commands Success: 1
+    2022-08-11 03:33:16 Query Commands ms : 41
+    2022-08-11 03:33:16 Total Commands Failed : 0
+    2022-08-11 03:33:16 Total Commands Success: 1
+    2022-08-11 03:33:16 TotalCommands ms : 41
+    2022-08-11 03:33:16 -------------------------------------------------------------------------------------
+    2022-08-11 03:33:16 Query : SELECT count(Id) FROM PerformanceVarcharnVarchar Where TextToSearch = N'Test Search ' + CONVERT(nvarchar(200),RAND()*(2000000-10000)+10000) OPTION (MAXDOP 1)
+    2022-08-11 03:33:16 Iteration : 1 Query 2 / 2
+    2022-08-11 03:33:17 Time required (ms) : 473,7891
+    2022-08-11 03:33:17 Query Commands Failed : 0
+    2022-08-11 03:33:17 Query Commands Success: 1
+    2022-08-11 03:33:17 Query Commands ms : 474
+    2022-08-11 03:33:17 Total Commands Failed : 0
+    2022-08-11 03:33:17 Total Commands Success: 2
+    2022-08-11 03:33:17 TotalCommands ms : 257,5
+    2022-08-11 03:33:17 ---------------------------------------------------------------------------------------------------------------
+    2022-08-11 03:33:17 Connecting to the database: servername.database.windows.net - DB: databasena...Attempt #1 of 5 - IP:52.138.224.1
+    2022-08-11 03:33:17 Connected to the database in (ms):0 - Provider:SQLOLEDB -- HostName: Server Version:12.00.0312
+    2022-08-11 03:33:17 Total Connections Failed : 0
+    2022-08-11 03:33:17 Total Connections Success: 2
+    2022-08-11 03:33:17 Total Connections ms : 162
+    2022-08-11 03:33:17 Ports Count : 1433 0 (0) 11xx: (0) Others:(215)
+    2022-08-11 03:33:17 Ports Status:
+    2022-08-11 03:33:17 ---->Established (207)
+    2022-08-11 03:33:17 ---->TimeWait (5)
+    2022-08-11 03:33:17 ---->SynSent (2)
+
+    2022-08-11 03:38:01 -------------------------------------- SUMMARY -----------------------------------------------------------------
+    2022-08-11 03:38:01 Total Connections Failed :0
+    2022-08-11 03:38:01 Total Connections Success:200
+    2022-08-11 03:38:01 Total Connections Avg ms :2,515
+    2022-08-11 03:38:01 Total Number Executions :200
+    2022-08-11 03:38:01 Total Number Queries :2
+    2022-08-11 03:38:01 Total Number Process :400
+    2022-08-11 03:38:01 Total Commands Failed :0
+    2022-08-11 03:38:01 Total Commands Success :400
+    2022-08-11 03:38:01 Total Commands ms :120,0725
+    2022-08-11 03:38:01 ------------------- Queries SummarySELECT count(Id) FROM PerformanceVarcharnVarchar Where TextToSearch = N'Test Search ' + CONVERT(nvarchar(200),RAND()*(2000000-10000)+10000) OPTION (MAXDOP 1)
+    2022-08-11 03:38:01 Query # :SELECT 1
+    2022-08-11 03:38:01 Total Commands Failed :0
+    2022-08-11 03:38:01 Total Commands Success:200
+    2022-08-11 03:38:01 Total Commands ms :35,57
+    2022-08-11 03:38:01 Query # :SELECT count(Id) FROM PerformanceVarcharnVarchar Where TextToSearch = N'Test Search ' + CONVERT(nvarchar(200),RAND()*(2000000-10000)+10000) OPTION (MAXDOP 1)
+    2022-08-11 03:38:01 Total Commands Failed :0
+    2022-08-11 03:38:01 Total Commands Success:200
+    2022-08-11 03:38:01 Total Commands ms :204,575
+    2022-08-11 03:38:01 Review: https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/provider-statistics-for-sql-server
+    2022-08-11 03:38:01 -------------------------------------- SUMMARY -----------------------------------------------------------------
+
 Enjoy!
